@@ -1,0 +1,50 @@
+[
+  {
+    "Name": "Angular",
+    "Description": "Software",
+    "Price": 200,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 1,
+    "ProductBrandId": 1
+  },
+  {
+    "Name": "React",
+    "Description": "Software",
+    "Price": 200,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 1,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Veu",
+    "Description": "Software",
+    "Price": 200,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 1,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": ".net core",
+    "Description": "Software",
+    "Price": 200,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 1,
+    "ProductBrandId": 3
+  },
+  {
+    "Name": "Maroon Sweater",
+    "Description": "woolen maroon sweater XL",
+    "Price": 1500,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 2,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Black Converse",
+    "Description": "Chuck Taylor Black Converse size 43",
+    "Price": 2000,
+    "PictureUrl": "Images/products/",
+    "ProductTypeId": 3,
+    "ProductBrandId": 5
+  }
+]
