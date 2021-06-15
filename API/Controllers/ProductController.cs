@@ -1,4 +1,5 @@
 ﻿using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models;
@@ -14,9 +15,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ControllerBase
+
+    public class ProductController : ApiBaseController
     {
         private readonly IGenericRepositoryAsync<Product> _GenericRepositoryAsync;
         private readonly IMapper _mapper;
@@ -36,30 +36,23 @@ namespace API.Controllers
 
             var specs = new ProductWithBrandAndTypeSpecification();
             var response = await _GenericRepositoryAsync.GetAllWithSpecsAsync(specs);
-            ServiceResponse<IReadOnlyList<ProductReadDto>> finalResponse =  new ServiceResponse<IReadOnlyList<ProductReadDto>>();
-            if (response.Data == null) return NotFound(response);
+            if (response == null) return NotFound(response);
 
-            finalResponse.Message = response.Message;
-            finalResponse.Success = response.Success;
-            finalResponse.Data = _mapper.Map<IReadOnlyList<ProductReadDto>>(response.Data);
-            return Ok(finalResponse);
+            return Ok(_mapper.Map<IReadOnlyList<ProductReadDto>>(response));
 
         }
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)] // for Swagger documentation porpse, telling the possible response outcome codes 
+
         public async Task<IActionResult> GetProductById(int id)
         {
             //commented out genericRepo function without the implementation of specificaiton
             //var response = await _GenericRepositoryAsync.GetByIdAsync(id);
             var spec = new ProductWithBrandAndTypeSpecification(id);
             var response = await _GenericRepositoryAsync.GetByIdWithSpecAsync(spec);
-            if (response.Data == null) return NotFound(response);
-
-            ServiceResponse<ProductReadDto> finalResponse = new ServiceResponse<ProductReadDto>();
-            finalResponse.Message = response.Message;
-            finalResponse.Success = response.Success;
-            finalResponse.Data = _mapper.Map<ProductReadDto>(response.Data);
-
-            return Ok(finalResponse);
+            if (response == null) return NotFound(response);
+            return Ok(_mapper.Map<ProductReadDto>(response));
         }
 
 

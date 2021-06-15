@@ -20,65 +20,24 @@ namespace Infrastructure.Repositories
         {
             _storeContext = storeContext;
         }
-        public async Task<ServiceResponse<IReadOnlyList<T>>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            ServiceResponse<IReadOnlyList<T>> response = new ServiceResponse<IReadOnlyList<T>>();
-            try
-            {
-                response.Data = await _storeContext.Set<T>().ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-            return response;
+            return await _storeContext.Set<T>().ToListAsync(); 
         }
 
 
 
-        public async Task<ServiceResponse<T>> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            ServiceResponse<T> response = new ServiceResponse<T>();
-            try
-            {
-                response.Data = await _storeContext.Set<T>().FirstAsync(x => x.Id == id);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-            return response;
+            return await _storeContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<ServiceResponse<IReadOnlyList<T>>> GetAllWithSpecsAsync(ISpecification<T> spec)
-        {
-            
-            ServiceResponse<IReadOnlyList<T>> response = new ServiceResponse<IReadOnlyList<T>>();
-            try
-            {
-                response.Data = await ApplySpecification(spec).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            } 
-            return response;
+        public async Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec)
+        {          
+            return await ApplySpecification(spec).ToListAsync();
         }
-        public async Task<ServiceResponse<T>> GetByIdWithSpecAsync(ISpecification<T> spec)
+        public async Task<T> GetByIdWithSpecAsync(ISpecification<T> spec)
         {
-            ServiceResponse<T> response = new ServiceResponse<T>();
-            try
-            {
-                response.Data = await ApplySpecification(spec).FirstAsync();
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-            return response;
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
