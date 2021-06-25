@@ -22,12 +22,25 @@ namespace Infrastructure.Data
 
             }
 
+            if(spec.OrderBy !=null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+
+            if (spec.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDesc);
+            }
+            //NOTE : order imp. Pagination should take place only after all other processes
+            if(spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
 
 
             //using aggregate method to List of expression (i.e Includes) with query as seed value 
             //used to aggregate the where query and all the include statements(1 or more) into one and return as an Iqueryable
             query = spec.Includes.Aggregate(query, (accumulation, include) => accumulation.Include(include));
-
 
             return query;
         }

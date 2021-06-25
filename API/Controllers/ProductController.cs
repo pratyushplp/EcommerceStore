@@ -1,5 +1,6 @@
 ﻿using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models;
@@ -29,16 +30,19 @@ namespace API.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromQuery] ProductSpecParams productSpecParams)
         {
             //commented out genericRepo function without the implementation of specificaiton
             //var response = await _GenericRepositoryAsync.GetAllAsync();
 
-            var specs = new ProductWithBrandAndTypeSpecification();
+            var specs = new ProductWithBrandAndTypeSpecification(productSpecParams);
+            var countSpecs = new ProductCountSpecification(productSpecParams);
             var response = await _GenericRepositoryAsync.GetAllWithSpecsAsync(specs);
             if (response == null) return NotFound(response);
+            int count = await _GenericRepositoryAsync.GetCountAsync(countSpecs);
+            var data =_mapper.Map<IReadOnlyList<ProductReadDto>>(response);
 
-            return Ok(_mapper.Map<IReadOnlyList<ProductReadDto>>(response));
+            return Ok(new Pagination<ProductReadDto>(productSpecParams.PageIndex, productSpecParams.PageSize, count, data));
 
         }
         [HttpGet("{id}")]

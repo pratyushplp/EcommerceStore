@@ -49,7 +49,6 @@ namespace Infrastructure.Data
 
                     foreach (var productBrand in finalData)
                     {
-
                         storeContext.ProductBrands.Add(productBrand);
                     }
                     //TODO: Create a function which allows only MSSQL database to set identity insert on

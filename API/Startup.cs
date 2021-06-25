@@ -32,6 +32,14 @@ namespace API
 
             services.AddApplicationServices(); //Adding services in extension class (ApplicationServiceExtensions)
             services.AddSwaggerDocumentation();
+            //for cross origin resource sharing
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
 
         }
 
@@ -49,13 +57,13 @@ namespace API
             app.UseRouting();
 
             app.UseStaticFiles();
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
             // Console.WriteLine("LOG IS HERE");
 
             app.UseSwaggerDocumentation();// using extension method 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
