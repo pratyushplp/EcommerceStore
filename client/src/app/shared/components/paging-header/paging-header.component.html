@@ -1,0 +1,17 @@
+<header>
+  <span *ngIf="this.totalCount && this.totalCount > 0; else noValues">
+    Showing
+    <strong
+      >{{ this.pageIndex * this.pageSize + 1 }} -
+      {{
+        (this.pageIndex + 1) * this.pageSize > this.totalCount
+          ? this.totalCount
+          : (this.pageIndex + 1) * this.pageSize
+      }}
+    </strong>
+    of <strong>{{ this.totalCount }}</strong> Results</span
+  >
+  <ng-template #noValues>
+    <strong>Products not found!</strong>
+  </ng-template>
+</header>
