@@ -5,7 +5,7 @@
     class="img-fluid"
   />
   <div class="card-body d-flex flex-column">
-    <a href="#">
+    <a routerLink="/shop/{{ product.id }}">
       <h6>{{ product.name | uppercase }}</h6>
     </a>
     <span class="mb-2">{{ product.price | currency }}</span>
@@ -20,8 +20,12 @@
         >
           Cart
         </button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">
-          Edit
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          routerLink="/shop/{{ product.id }}"
+        >
+          View
         </button>
       </div>
     </div>
