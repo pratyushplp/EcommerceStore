@@ -1,0 +1,16 @@
+<p>server-error works!</p>
+<ng-container *ngIf="error">
+  <h5 class="text-danger">Error : {{ error.message }}</h5>
+  <p>
+    If you are seeing this error, then most probably problem does not lie in
+    angular.
+  </p>
+  <p>What to do next?</p>
+  <p>
+    Use chrome dev tools ,inspect network tab. Check the failing, examine if the
+    request url is correct then try to REPORODUCE the error in postman. If
+    sucessful the error is not in angular.
+  </p>
+  <p>follow the stacktrace below</p>
+  <code>{{ error.details }}</code>
+</ng-container>
