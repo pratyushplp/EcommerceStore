@@ -15,7 +15,7 @@ namespace Core.Specifications
             AddInclude(x => x.ProductType);
             AddInclude(x => x.ProductBrand);
             AddOrderBy(x => x.Name);
-            AddPagination(productSpecParams.PageIndex*(productSpecParams.PageSize - 1), productSpecParams.PageSize);
+            AddPagination(productSpecParams.PageIndex*(productSpecParams.PageSize ), productSpecParams.PageSize);
 
             if (!string.IsNullOrWhiteSpace(productSpecParams.Sort))
             {

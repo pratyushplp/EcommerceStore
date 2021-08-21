@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddScoped<IProductRepositoryAsync, ProductRepositoryAsync>();
             services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));// this approach for generic as we dont know the Type(T) until compile time
 
+            services.AddScoped<IBasketRepositoryAsync, BasketRepositoryAsync>();
             //Note : this should come after AddControllers as we are configuring (overriding) the [ApiController] attribute inside AddController
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -31,6 +32,7 @@ namespace API.Extensions
                     {
                         Errors = errors
                     };
+                    
 
                     return new BadRequestObjectResult(errorResponse);
                 };
